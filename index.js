@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const session = require('express-session');
 const cors = require("cors"); // Import the CORS middleware
 const path = require("path");
 
@@ -9,6 +10,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+  }));
 
 app.listen(3000, () => {
   console.log("Server Running In Port 3000");
@@ -37,9 +44,20 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get("/save", (req, res) => {
-  res.send("save Page");
-});
+app.post('/set-session', (req, res) => {
+    const studentId = req.body.studentId;
+    req.session.studentId = studentId; // Save data to session
+    res.json({ message: 'Session data set', studentId: req.session.studentId });
+  });
+
+  app.get('/get-session', (req, res) => {
+    const studentId = req.session.studentId; // Retrieve data from session
+    if (studentId) {
+      res.json({ studentId });
+    } else {
+      res.json({ message: 'No session data found' });
+    }
+  });
 
 // Create New Product
 app.post("/student/save", async (req, res) => {

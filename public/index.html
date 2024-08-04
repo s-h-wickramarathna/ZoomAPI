@@ -13,19 +13,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-4 mt-5">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select id="student" class="form-select" aria-label="Default select example">
+                    <option value="0" selected>Select Student</option>
                 </select>
             </div>
             <div class="col-8 mt-5">
-                <button type="button" class="btn btn-primary">Go To Class</button>
+                <button type="button" onclick="goClassPage()" class="btn btn-primary">Go To Class</button>
+                <button type="button" onclick="getSessionData()" class="btn btn-primary">Get Class</button>
             </div>
         </div>
 
     </div>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>
